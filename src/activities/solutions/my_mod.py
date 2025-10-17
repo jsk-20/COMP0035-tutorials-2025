@@ -51,6 +51,20 @@ def describe_dataframe(df):
     print("\n--- Descriptive Statistics ---")
     print(df.describe())
 
+    #  Missing values
+    print("\n--- Missing Values Summary ---")
+    print(df.isna().sum())  # Count of missing values per column
+
+    # Create a new DataFrame with only rows containing missing values
+    missing_rows = df[df.isna().any(axis=1)]
+    print(f"\nNumber of rows with missing values: {len(missing_rows)}")
+
+    if not missing_rows.empty:
+        print("\nExample rows with missing data:")
+        print(missing_rows.head())
+    else:
+        print("No missing values found in this dataset.")
+
 
 # dataframe(sheet1)
 
