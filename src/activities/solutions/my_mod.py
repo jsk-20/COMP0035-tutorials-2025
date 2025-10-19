@@ -1,5 +1,10 @@
 from pathlib import Path
 import pandas as pd
+import matplotlib.pyplot as plt
+# import numpy as np
+# Not needed
+
+
 # import csv
 
 project_root = Path(__file__).parent.parent
@@ -66,6 +71,26 @@ def describe_dataframe(df):
         print("No missing values found in this dataset.")
 
 
+def createhist(df):
+    # Create a histogram of the DataFrame
+    # df.hist()
+    columns = ["participants_m", "participants_f"]  # specify the columns to plot
+    df[columns].hist()
+
+    # Show the plot
+    plt.show()
+
+
+def boxplots(df):
+    # Create boxplots of the DataFrame
+    # df = pd.DataFrame(np.random.rand(10, 5), columns=["A", "B", "C", "D", "E"])
+    # df.boxplot()
+    # df.plot.box()  # This syntax is also valid
+    columns = ["sports"]
+    df[columns].boxplot()
+    plt.show()
+
+
 # dataframe(sheet1)
 
 if __name__ == "__main__":
@@ -79,3 +104,7 @@ if __name__ == "__main__":
     # Call the function named 'describe_dataframe' - you may have a different
     # name for your function
     describe_dataframe(events_csv_df)
+
+    createhist(events_csv_df)
+
+    boxplots(events_csv_df)
