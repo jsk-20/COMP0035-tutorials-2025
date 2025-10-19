@@ -100,22 +100,51 @@ def create_db(schema_path, db_path):
         schema_path (str): Path to the SQL schema file.
         db_path (str): Path where the SQLite database will be created.
     """
+    # # Create a connection
+    # conn = sqlite3.connect(db_path)
+    # cursor = conn.cursor()
 
-    # Create a connection
-    conn = sqlite3.connect(db_path)
-    cursor = conn.cursor()
+    # # Read the SQL schema file
+    # with open(schema_path, 'r') as f:
+    #     schema_sql = f.read()
 
-    # Read the SQL schema file
-    with open(schema_path, 'r') as f:
-        schema_sql = f.read()
+    # # Execute the schema SQL
+    # cursor.executescript(schema_sql)
 
-    # Execute the schema SQL
-    cursor.executescript(schema_sql)
+    # # Commit and close the connection
+    # conn.commit()
+    # conn.close()
 
-    # Commit and close the connection
-    conn.commit()
-    conn.close()
+    conn = None
 
+    try:
+        # Try to connect to the database
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+
+        # Try to open and read the schema file
+        with open(schema_path, 'r') as f:
+            schema_sql = f.read()
+
+        # Try to execute the SQL commands
+        cursor.executescript(schema_sql)
+
+        conn.commit()
+        print(f"Database created successfully at: {db_path}")
+        return True
+
+    except FileNotFoundError:
+        print(f"Error: schema file '{schema_path}' does not exist.")
+    except sqlite3.Error as e:
+        print(f"SQLite error occurred: {e}")
+    except Exception as e:
+        print(f"Unexpected error: {e}")
+    finally:
+        if conn:
+            conn.close()
+            print("Database connection closed.")
+
+        return False
 
 # Activity 4.7 add exception handling to this function
 def describe(file_path):
@@ -133,12 +162,34 @@ def describe(file_path):
             FileNotFoundError: If the file does not exist.
 
     """
-    df = pd.read_csv(file_path)
+    # df = pd.read_csv(file_path)
 
-    # 2.3 Describe
-    pd.set_option("display.max_columns", None)  # Change the pandas display options to print all columns
-    print("\nThe number of rows and columns\n", df.shape)
-    print("\nThe first 5 rows\n", df.head(5))
+    # # 2.3 Describe
+    # pd.set_option("display.max_columns", None)  # Change the pandas display options to print all columns
+    # print("\nThe number of rows and columns\n", df.shape)
+    # print("\nThe first 5 rows\n", df.head(5))
+
+    try:
+        # Try to read the CSV file
+        df = pd.read_csv(file_path)
+
+        # Print data description if successful
+        pd.set_option("display.max_columns", None)
+        print("\nThe number of rows and columns:\n", df.shape)
+        print("\nThe first 5 rows:\n", df.head(5))
+
+    except FileNotFoundError:
+        print(f"Error: File not found at '{file_path}'.")
+
+    except pd.errors.EmptyDataError:
+        print(f"Error: The file at '{file_path}' is empty.")
+
+    except pd.errors.ParserError:
+        print(f"Error: Could not parse the CSV file at '{file_path}'. Is it corrupted or incorrectly formatted?")
+
+    except Exception as e:
+        # Catch any other unanticipated errors
+        print(f"An unexpected error occurred: {e}")
 
 
 if __name__ == '__main__':
