@@ -84,7 +84,8 @@ def createhist(df):
 
 def boxplots(df):
     # Create boxplots of the DataFrame
-    # df = pd.DataFrame(np.random.rand(10, 5), columns=["A", "B", "C", "D", "E"])
+    # df = pd.DataFrame(np.random.rand(10, 5),
+    # columns=["A", "B", "C", "D", "E"])
     # df.boxplot()
     # df.plot.box()  # This syntax is also valid
     columns = ["sports"]
@@ -114,6 +115,7 @@ if __name__ == "__main__":
     events_csv_df = pd.read_csv(paralympics_csv)
     # Call the function named 'describe_dataframe' - you may have a different
     # name for your function
+
     describe_dataframe(events_csv_df)
 
     createhist(events_csv_df)
@@ -121,3 +123,9 @@ if __name__ == "__main__":
     boxplots(events_csv_df)
 
     linechart(events_csv_df)
+
+    print(events_csv_df['type'].unique())
+    print(events_csv_df['disabilities_included'].unique())
+
+    print(events_csv_df['type'].value_counts())
+    print(events_csv_df['disabilities_included'].value_counts())
