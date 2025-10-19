@@ -74,7 +74,8 @@ def describe_dataframe(df):
 def createhist(df):
     # Create a histogram of the DataFrame
     # df.hist()
-    columns = ["participants_m", "participants_f"]  # specify the columns to plot
+    # specify the columns to plot
+    columns = ["participants_m", "participants_f"]
     df[columns].hist()
 
     # Show the plot
@@ -88,6 +89,16 @@ def boxplots(df):
     # df.plot.box()  # This syntax is also valid
     columns = ["sports"]
     df[columns].boxplot()
+    plt.show()
+
+
+def linechart(df):
+    """Simple function to plot participants over time."""
+    plt.figure(figsize=(10, 5))
+    plt.plot(df['start'], df['participants'], marker='o')
+    plt.xlabel("Year / Start")
+    plt.ylabel("Number of Participants")
+    plt.title("Participants Over Time")
     plt.show()
 
 
@@ -108,3 +119,5 @@ if __name__ == "__main__":
     createhist(events_csv_df)
 
     boxplots(events_csv_df)
+
+    linechart(events_csv_df)
