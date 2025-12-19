@@ -33,7 +33,7 @@ class ParalympicEvent:
         self.athletes.append(athlete_name)
 
 
-# Old method to test the ParalympicEvent class
+## Old method to test the ParalympicEvent class
 # event = ParalympicEvent(
 #     name="Men's individual BC1",
 #     sport="Boccia",
@@ -45,28 +45,72 @@ class ParalympicEvent:
 # event.describe()  # Should print the event again, "Athletes competing" should include Sungjoon Jung
 
 
-# New Athlete class to represent an athlete
+## New Athlete class to represent an athlete
+# class Athlete:
+#     """Represents an athlete competing in the Paralympics"""
+#     def __init__(self, name, team, classification):
+#         self.name = name
+#         self.team = team
+#         self.classification = classification
+
+
+#     def __str__(self):
+#         return (
+#             f"Athlete: {self.name}, "
+#             f"Team: {self.team}, "
+#             f"Classification: {self.classification}"
+#         )
+
+
+# athlete1 = Athlete(
+#     name="Sungjoon Jung",
+#     team="KOR",
+#     classification="BC1"
+# )
+
+# print(athlete1)
+
+
+from dataclasses import dataclass
+from datetime import date
+from typing import List
+
+
+@dataclass
+class Medal:
+    type: str
+    design: str
+    date_designed: date
+
+
 class Athlete:
-    """Represents an athlete competing in the Paralympics"""
-    def __init__(self, name, team, classification):
-        self.name = name
-        self.team = team
-        self.classification = classification
+    def __init__(self, first_name: str, last_name: str, team_code: str, disability_class: str, medals: List[Medal]):
+        self.first_name = first_name
+        self.last_name = last_name
+        self.team_code = team_code
+        self.disability_class = disability_class
+        self.medals = medals  # Composition: Athlete has Medals
 
     def __str__(self):
+        medal_list = ", ".join(m.type for m in self.medals) or "None"
         return (
-            f"Athlete: {self.name}, "
-            f"Team: {self.team}, "
-            f"Classification: {self.classification}"
+            f"Athlete: {self.first_name} {self.last_name}\n"
+            f"Team: {self.team_code}\n"
+            f"Classification: {self.disability_class}\n"
+            f"Medals: {medal_list}"
         )
+    
+# Create medals
+medal1 = Medal("gold", "Paris 2024 design", date(2023, 7, 1))
+medal2 = Medal("silver", "Tokyo 2020 design", date(2019, 8, 25))
 
-
-athlete1 = Athlete(
-    name="Sungjoon Jung",
-    team="KOR",
-    classification="BC1"
+# Create an athlete with medals
+athlete = Athlete(
+    first_name="Wei",
+    last_name="Wang",
+    team_code="CHN",
+    disability_class="T54",
+    medals=[medal1, medal2]
 )
 
-print(athlete1)
-
-
+print(athlete)
