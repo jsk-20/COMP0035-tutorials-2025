@@ -31,3 +31,42 @@ class ParalympicEvent:
             athlete_name: A string representing the name of the athlete
         """
         self.athletes.append(athlete_name)
+
+
+# Old method to test the ParalympicEvent class
+# event = ParalympicEvent(
+#     name="Men's individual BC1",
+#     sport="Boccia",
+#     classification="BC1",
+# )
+
+# event.describe()  # Should print the event description, "Athletes competing" will be empty
+# event.register_athlete("Sungjoon Jung")  # should register the athlete
+# event.describe()  # Should print the event again, "Athletes competing" should include Sungjoon Jung
+
+
+# New Athlete class to represent an athlete
+class Athlete:
+    """Represents an athlete competing in the Paralympics"""
+    def __init__(self, name, team, classification):
+        self.name = name
+        self.team = team
+        self.classification = classification
+
+    def __str__(self):
+        return (
+            f"Athlete: {self.name}, "
+            f"Team: {self.team}, "
+            f"Classification: {self.classification}"
+        )
+
+
+athlete1 = Athlete(
+    name="Sungjoon Jung",
+    team="KOR",
+    classification="BC1"
+)
+
+print(athlete1)
+
+
